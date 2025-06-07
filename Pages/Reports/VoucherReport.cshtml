@@ -1,1 +1,71 @@
-﻿
+﻿@page
+@model MiniAccounts.Pages.Reports.VoucherReportModel
+@{
+    ViewData["Title"] = "Voucher Report";
+}
+
+<h2>Voucher Report</h2>
+
+<form method="get" class="row mb-3">
+    <div class="col-md-3">
+        <label>Start Date</label>
+        <input type="date" asp-for="StartDate" class="form-control" />
+    </div>
+    <div class="col-md-3">
+        <label>End Date</label>
+        <input type="date" asp-for="EndDate" class="form-control" />
+    </div>
+    <div class="col-md-3">
+        <label>Voucher Type</label>
+        <select asp-for="VoucherType" class="form-control">
+            <option value="">-- All --</option>
+            <option>Journal</option>
+            <option>Payment</option>
+            <option>Receipt</option>
+        </select>
+    </div>
+    <div class="col-md-3 d-flex align-items-end">
+        <button type="submit" class="btn btn-primary">🔍 Filter</button>
+    </div>
+</form>
+
+<form method="post" asp-page-handler="Export" class="mb-3">
+    <input type="hidden" name="StartDate" value="@Model.StartDate?.ToString("yyyy-MM-dd")" />
+    <input type="hidden" name="EndDate" value="@Model.EndDate?.ToString("yyyy-MM-dd")" />
+    <input type="hidden" name="VoucherType" value="@Model.VoucherType" />
+    <button type="submit" class="btn btn-success">📥 Export to Excel</button>
+</form>
+
+
+@if (Model.ReportItems.Count > 0)
+{
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Type</th>
+                <th>Reference</th>
+                <th>Account</th>
+                <th>Debit</th>
+                <th>Credit</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.ReportItems)
+            {
+                <tr>
+                    <td>@item.VoucherDate.ToShortDateString()</td>
+                    <td>@item.VoucherType</td>
+                    <td>@item.ReferenceNo</td>
+                    <td>@item.AccountName</td>
+                    <td>@item.DebitAmount.ToString("N2")</td>
+                    <td>@item.CreditAmount.ToString("N2")</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>No data found.</p>
+}
