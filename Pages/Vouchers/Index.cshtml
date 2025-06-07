@@ -1,1 +1,38 @@
-﻿
+﻿@page
+@model MiniAccounts.Pages.Vouchers.IndexModel
+@{
+    ViewData["Title"] = "Vouchers";
+}
+
+<h2>Voucher List</h2>
+
+@* <a class="btn btn-primary mb-3" asp-page="CreateVoucher">➕ Create New Voucher</a> *@
+@if (User.IsInRole("Admin") || User.IsInRole("Accountant"))
+{
+    <a class="btn btn-primary mb-3" asp-page="/Vouchers/CreateVoucher">➕Create New Voucher</a>
+}
+
+<table class="table table-bordered">
+    <thead class="table-light">
+        <tr>
+            <th>ID</th>
+            <th>Type</th>
+            <th>Date</th>
+            <th>Reference No</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var v in Model.VoucherList)
+        {
+            <tr>
+                @*  <td>@v.VoucherId</td> *@
+                <td>
+                    <a asp-page="Details" asp-route-id="@v.VoucherId">View</a>
+                </td>
+                <td>@v.VoucherType</td>
+                <td>@v.VoucherDate.ToShortDateString()</td>
+                <td>@v.ReferenceNo</td>
+            </tr>
+        }
+    </tbody>
+</table>
