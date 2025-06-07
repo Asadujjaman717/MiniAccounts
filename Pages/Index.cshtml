@@ -1,0 +1,29 @@
+﻿@* @page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+</div>
+ *@
+
+@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Dashboard";
+}
+
+<h2 class="text-center gap-2 m-4">📋 Account Management Dashboard</h2>
+
+<div class="d-grid gap-3 col-6 mx-auto">
+
+    <a class="btn btn-primary btn-lg" asp-page="/Accounts/Index">📘 Chart of Accounts</a>
+    <a class="btn btn-success btn-lg" asp-page="/Vouchers/CreateVoucher">📝 Add New Voucher</a>
+    <a class="btn btn-info btn-lg" asp-page="/Vouchers/Index">📄 View Vouchers</a>
+    <a class="btn btn-warning btn-lg" asp-page="/Reports/VoucherReport">📊 Voucher Report</a>
+    <a class="btn btn-secondary btn-lg" asp-page="/Admin/Users/Index">👥 User Management</a> <!-- If implemented -->
+
+</div>
