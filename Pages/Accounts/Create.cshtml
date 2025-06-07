@@ -1,1 +1,46 @@
-﻿
+﻿@page
+@model MiniAccounts.Pages.Accounts.CreateModel
+@{
+    ViewData["Title"] = "Add New Account";
+}
+
+<h2>Add New Account</h2>
+
+<form method="post" class="form">
+    <div class="mb-3">
+        <label asp-for="Account.AccountName" class="form-label">Account Name</label>
+        <input asp-for="Account.AccountName" class="form-control" />
+        <span asp-validation-for="Account.AccountName" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Account.AccountType" class="form-label">Account Type</label>
+        <select asp-for="Account.AccountType" class="form-select">
+            <option value="">-- Select Type --</option>
+            <option value="Asset">Asset</option>
+            <option value="Liability">Liability</option>
+            <option value="Income">Income</option>
+            <option value="Expense">Expense</option>
+            <option value="Equity">Equity</option>
+        </select>
+        <span asp-validation-for="Account.AccountType" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Account.ParentId" class="form-label">Parent Account (Optional)</label>
+        <select asp-for="Account.ParentId" class="form-select">
+            <option value="">-- Root Account --</option>
+            @foreach (var item in Model.AccountDropdown)
+            {
+                <option value="@item.Id">@item.AccountName</option>
+            }
+        </select>
+    </div>
+
+    <button type="submit" class="btn btn-success">✅ Save</button>
+    <a asp-page="Index" class="btn btn-secondary">🔙 Back</a>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

@@ -1,1 +1,24 @@
-﻿
+﻿@model MiniAccounts.Pages.Accounts.AccountTreeModel
+
+@{
+    var children = Model.AllAccounts.Where(a => a.ParentId == Model.ParentId).ToList();
+}
+
+@if (children.Count > 0)
+{
+    <ul>
+        @foreach (var item in children)
+        {
+            <li>
+                <strong>@item.AccountName</strong> - <em>@item.AccountType</em>
+                [<a asp-page="Edit" asp-route-id="@item.Id">Edit</a>]
+                [<a asp-page="Delete" asp-route-id="@item.Id">Delete</a>]
+
+                @await Html.PartialAsync("_AccountTreePartial", new MiniAccounts.Pages.Accounts.AccountTreeModel {
+                AllAccounts = Model.AllAccounts,
+                ParentId = item.Id
+                })
+    </li>
+        }
+</ul>
+}

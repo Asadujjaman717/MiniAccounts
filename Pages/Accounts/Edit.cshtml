@@ -1,1 +1,50 @@
-﻿
+﻿@page "{id:int}"
+@model MiniAccounts.Pages.Accounts.EditModel
+@{
+    ViewData["Title"] = "Edit Account";
+}
+
+<h2>Edit Account</h2>
+
+<form method="post" class="form">
+    <input type="hidden" asp-for="Account.AccountId" />
+
+    <div class="mb-3">
+        <label asp-for="Account.AccountName" class="form-label">Account Name</label>
+        <input asp-for="Account.AccountName" class="form-control" />
+        <span asp-validation-for="Account.AccountName" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Account.AccountType" class="form-label">Account Type</label>
+        <select asp-for="Account.AccountType" class="form-select">
+            <option value="">-- Select Type --</option>
+            <option value="Asset">Asset</option>
+            <option value="Liability">Liability</option>
+            <option value="Income">Income</option>
+            <option value="Expense">Expense</option>
+            <option value="Equity">Equity</option>
+        </select>
+        <span asp-validation-for="Account.AccountType" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Account.ParentAccountId" class="form-label">Parent Account</label>
+        <select asp-for="Account.ParentAccountId" class="form-select">
+            <option value="">-- Root Account --</option>
+            @foreach (var item in Model.AccountDropdown)
+            {
+                <option value="@item.Id" selected="@(item.Id == Model.Account.ParentAccountId)">
+                    @item.AccountName
+                </option>
+            }
+        </select>
+    </div>
+
+    <button type="submit" class="btn btn-primary">💾 Update</button>
+    <a asp-page="Index" class="btn btn-secondary">🔙 Cancel</a>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

@@ -1,1 +1,20 @@
-﻿
+﻿@page
+@model MiniAccounts.Pages.Accounts.IndexModel
+@{
+    ViewData["Title"] = "Chart of Accounts";
+}
+
+<h2>Chart of Accounts</h2>
+
+<a class="btn btn-primary mb-3" asp-page="Create">➕ Add Account</a>
+
+@await Html.PartialAsync("_AccountTreePartial", new MiniAccounts.Pages.Accounts.AccountTreeModel {
+AllAccounts = Model.AccountList.Select(account => new MiniAccounts.Pages.Accounts.AccountItem
+{
+    Id = account.Id,
+    AccountName = account.Name,       // Correct mapping
+    AccountType = account.Type,       // Correct mapping
+    ParentId = account.ParentId
+}).ToList(),
+    ParentId = null
+})
