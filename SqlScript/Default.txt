@@ -1,0 +1,47 @@
+﻿ // Default admin user credentials
+            string adminEmail = "admin@demo.com";
+            string adminPassword = "Admin@123";
+
+//Accountant
+Email: admin2@gmail.com
+Pass: Admin2@gmail.com
+
+//Viewer
+Email: gtr@gmail.com
+Pass: Gtr@123
+
+
+----------------------------
+
+-- 🌟 Default Data for MiniAccountsDB
+
+-- Clear existing data (for fresh insert, optional)
+DELETE FROM VoucherDetails;
+DELETE FROM Vouchers;
+DELETE FROM ChartOfAccounts;
+
+-- Insert Chart of Accounts
+INSERT INTO ChartOfAccounts (AccountCode, AccountName, ParentAccountId, Level, IsActive)
+VALUES 
+('1000', 'Assets', NULL, 0, 1),
+('1100', 'Cash', 1, 1, 1),
+('1200', 'Bank', 1, 1, 1),
+('2000', 'Liabilities', NULL, 0, 1),
+('2100', 'Accounts Payable', 4, 1, 1),
+('3000', 'Equity', NULL, 0, 1),
+('3100', 'Capital', 6, 1, 1),
+('4000', 'Revenue', NULL, 0, 1),
+('4100', 'Sales', 8, 1, 1),
+('5000', 'Expenses', NULL, 0, 1),
+('5100', 'Rent', 10, 1, 1),
+('5200', 'Utilities', 10, 1, 1);
+
+-- Insert sample Voucher (if needed)
+INSERT INTO Vouchers (VoucherDate, VoucherType, ReferenceNo, Remarks)
+VALUES 
+(GETDATE(), 'Journal', 'REF001', 'Initial Journal Entry');
+
+-- Insert details (you must match ChartOfAccounts.Id)
+-- Use SELECT * FROM ChartOfAccounts to find correct Ids
+-- INSERT INTO VoucherDetails (VoucherId, AccountId, Debit, Credit, Narration)
+-- VALUES (1, 2, 1000, 0, 'Cash Debit'), (1, 5, 0, 1000, 'Accounts Payable Credit');
